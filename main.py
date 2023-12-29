@@ -32,10 +32,15 @@ def blackjack():
         while user_input == 'y':
             action = input("Type 'y' to draw another card 'n' to pass: ")
             if action == 'y':
-                player_hand += draw_card()
-                dealer_hand += draw_card()
+                drawn_card = draw_card()
+                player_hand += drawn_card
+                print(f"You drew a {drawn_card}")
+                if dealer_hand <= 17:
+                    drawn_card = draw_card()
+                    dealer_hand += drawn_card
+                    print(f"Computer drew a {drawn_card}")
                 if player_hand > 21:
-                    print(f"{player_hand}: You lose")
+                    print(f"{player_hand}: You lose, Dealer had {dealer_hand}")
                     user_input = ''
                 elif player_hand == 21:
                     print(f"{player_hand}: You win!")
@@ -49,11 +54,17 @@ def blackjack():
                 else:
                     print(f"You have: {player_hand}, Dealer has: {dealer_hand}")
             if action == 'n':
-                if player_hand > dealer_hand:
-                    print("You Win")
+                if dealer_hand < 17:
+                    drawn_card = draw_card()
+                    dealer_hand += drawn_card
+                    print(f"Computer drew a {drawn_card}")
+                elif dealer_hand > 21:
+                    print(f"{player_hand}: You win!, Dealer had {dealer_hand}")
+                elif 21 > player_hand > dealer_hand:
+                    print(f"{player_hand}: You win!, Dealer had {dealer_hand}")
                     user_input = ''
                 elif player_hand < dealer_hand:
-                    print("You Lose")
+                    print(f"{player_hand}: You Lose, Dealer had {dealer_hand}")
                     user_input = ''
                 elif player_hand == dealer_hand:
                     print('Tie')
